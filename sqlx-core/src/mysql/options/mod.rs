@@ -63,6 +63,7 @@ pub struct MySqlConnectOptions {
     pub(crate) ssl_ca: Option<CertificateInput>,
     pub(crate) statement_cache_capacity: usize,
     pub(crate) charset: String,
+    pub(crate) time_zone: String,
     pub(crate) collation: Option<String>,
     pub(crate) log_settings: LogSettings,
 }
@@ -84,6 +85,7 @@ impl MySqlConnectOptions {
             password: None,
             database: None,
             charset: String::from("utf8mb4"),
+            time_zone: String::from("+00:00"),
             collation: None,
             ssl_mode: MySqlSslMode::Preferred,
             ssl_ca: None,
@@ -118,6 +120,12 @@ impl MySqlConnectOptions {
         self
     }
 
+    /// Sets the time_zone to connect as.
+    pub fn time_zone(mut self, time_zone: &str) -> Self {
+        self.time_zone = time_zone.to_owned();
+        self
+    }
+    
     /// Sets the username to connect as.
     pub fn username(mut self, username: &str) -> Self {
         self.username = username.to_owned();
